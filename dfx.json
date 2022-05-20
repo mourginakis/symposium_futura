@@ -1,0 +1,35 @@
+{
+  "canisters": {
+    "symposium_futura": {
+      "main": "src/symposium_futura/main.mo",
+      "type": "motoko"
+    },
+    "symposium_futura_assets": {
+      "dependencies": [
+        "symposium_futura"
+      ],
+      "frontend": {
+        "entrypoint": "src/symposium_futura_assets/src/index.html"
+      },
+      "source": [
+        "src/symposium_futura_assets/assets",
+        "dist/symposium_futura_assets/"
+      ],
+      "type": "assets"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "dfx": "0.9.3",
+  "networks": {
+    "local": {
+      "bind": "127.0.0.1:8000",
+      "type": "ephemeral"
+    }
+  },
+  "version": 1
+}
