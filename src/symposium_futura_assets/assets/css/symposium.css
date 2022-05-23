@@ -1,0 +1,68 @@
+/*DEBUG*/
+/** { border: 1px dotted red;}*/
+
+body {
+    font-family: courier;
+    /*line-height: 1.3;*/
+    /*font-size: 1.4em;*/
+}
+
+.header {
+    margin-left: 100px;
+}
+
+.header h1, h2, h3, h4, h5, h6 {
+    display:  inline-block;
+    margin: 25px;
+}
+
+.header img {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+}
+
+.header a {
+    color: inherit;
+    text-decoration: none; /* no underline */
+}
+
+/*
+.header h5 {
+    display: inline-block;
+}*/
+
+nav {
+  /*margin-right: 200px;*/
+  padding: 20px 0;
+}
+
+nav li {
+  /*color: #fff;*/
+  /*font-family: 'Raleway', sans-serif;*/
+  /*font-weight: 600px;*/
+  /*font-size: 12px;*/
+  display: inline-block;
+  width: 80px;
+}
+
+.sidebar {
+    top: 110px;
+    width:  220px;
+    position: fixed;
+    z-index: 1;
+    left: 40px;
+    border: 1px dotted gray;
+    text-align: center;
+}
+
+.sidebar img {
+    width: 100px;
+    margin-top: 20px;
+    border-radius: 30px;
+}
+
+.main {
+    margin-left:  200px;
+    margin-right: 80px;
+}
