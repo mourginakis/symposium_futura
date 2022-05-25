@@ -66,3 +66,7 @@ nav li {
     margin-left:  200px;
     margin-right: 80px;
 }
+
+#authButton:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
