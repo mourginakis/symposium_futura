@@ -1,4 +1,5 @@
 service : {
   greet: (text) -> (text);
+  wallet_balance: () -> (nat);
   whoami: () -> (principal);
 }
