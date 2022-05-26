@@ -1,5 +1,9 @@
 service : {
-  greet: (text) -> (text);
+  get_all_posts: () -> (bool) query;
+  get_pseudonym: () -> (text) query;
+  make_post: () -> ();
+  update_pseudonym: (text) -> ();
   wallet_balance: () -> (nat);
+  wallet_receive: () -> (record {accepted: nat64;});
   whoami: () -> (principal);
 }
