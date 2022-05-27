@@ -1,4 +1,5 @@
 service : {
+  get_all_posts: () -> (bool) query;
   get_pseudonym: () -> (text) query;
   make_post: () -> ();
   update_pseudonym: (text) -> ();
