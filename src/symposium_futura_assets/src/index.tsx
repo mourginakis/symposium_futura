@@ -9,6 +9,7 @@ import * as React from "react";
 //import { render } from "react-dom";
 import ReactDOM from "react-dom/client";
 import exampleposts from "../assets/exampleposts.json";
+import '../assets/css/symposium.scss';
 
 
 function authorize() {
@@ -28,21 +29,69 @@ class App extends React.Component {
 }
 
 
+function rand_nth(a: Array<String>): String {
+  return a[Math.floor(Math.random() * a.length)];
+}
 
-class ProfileCard extends React.Component {
+
+class ProfileCard extends React.Component<
+  {},
+  { audio: HTMLAudioElement}
+> {
+  timerID: NodeJS.Timer | undefined;
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      audio: new Audio("../ill-find-you-crystal-river-inmysleep.mp3"),
+    };
+    /** ideally this constructor will block until HTMLMediaElement.HAVE_ENOUGH_DATA is true */
+
+  }
+
+  animate(): void {
+    console.log("Animating!!");
+    this.state.audio.play();
+    this.timerID = setInterval(() => {
+      console.log("1 second has gone by");
+    }, 1000);
+  }
+
   render() {
+    const placeholders = [
+      "when you're ready to change the world",
+      "and be my guiding light",
+      "from this dream",
+      "and find the truth",
+    ];
+
+    // const audio = new Audio('../ill-find-you-crystal-river-inmysleep.mp3');
+    // audio.load();
+
     return (
       <div className="sidebar">
         <img src="img/hellorobotsomitsleep-cropped.jpeg" alt="profile" />
         <h5 id="pseudonym">ANONYMOUS</h5>
-        <p id="bio">
-          wake me {/*from */} when you're ready to change the world
-        </p>
-        {/* <!-- be my guiding light --> */}
-        {/* <!-- wake me from this dream --> */}
-        {/* <!-- come with me and find the truth --> */}
+        <div className="bio">
+          <p id="bio">
+            {"wake me"}
+            <br />
+            {rand_nth(placeholders)}
+          </p>
+        </div>
         <p>$₣: 200 ∞</p>
-        <button id="authButton" onClick={authorize}>Authorize</button>
+        <button
+          id="authButton"
+          onClick={authorize}
+          onMouseOver={() => this.animate() }
+          onMouseOut={() => {
+            clearInterval(this.timerID);
+            this.state.audio.pause();
+            this.state.audio.load();
+          }}
+        >
+          Authorize
+        </button>
       </div>
     );
   }
@@ -67,6 +116,7 @@ class SinglePost extends React.Component<{
     return (
       <div className="row">
         <h4>{this.props.title}</h4>
+        <h6>{this.props.author}</h6>
         <p>{this.props.content}</p>
       </div>
     );
