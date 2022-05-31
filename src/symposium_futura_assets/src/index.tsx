@@ -6,6 +6,7 @@ import { Actor, Identity, ActorSubclass, /*HttpAgent*/ } from "@dfinity/agent";
 
 import React, {useEffect, useState, useContext} from "react";
 import ReactDOM from "react-dom/client";
+import { flushSync } from "react-dom";
 import exampleposts from "../assets/exampleposts.json";
 import '../assets/css/symposium.scss';
 
@@ -31,16 +32,14 @@ function App() {
   const [futura_actor, setFutura_Actor] = useState<ActorSubclass<_SERVICE>>();
 
   const [myData, setMyData] = useState<number>(0);
-  const [myString, setMyString] = useState<string>();
+  const [myString, setMyString] = useState<string | undefined>("Oogabooga");
 
-  console.log("rerunning function!!!!");
+  console.log("rerendered");
 
-  useEffect(() => {
-
-  });
 
 
   useEffect(() => {
+    console.log("useEffect just got called")
     const init = async () => {
       // works even on page refresh
       const temp_authClient = await AuthClient.create();
@@ -48,9 +47,17 @@ function App() {
       setAuthClient(temp_authClient);
       setIsAuthenticated(temp_isAuthenticated);
 
+      // console.log(temp_isAuthenticated, isAuthenticated)
+
+
+      // if (temp_isAuthenticated) {
+      handleAuthenticated(temp_authClient)
+      // }
+
       // // kinda works?? but not on page refresh
       // setAuthClient(await AuthClient.create())
       // console.log(authClient);
+      // console.log("setisauthenticated: " + await authClient.isAuthenticated())
       // setIsAuthenticated(await authClient?.isAuthenticated())
       // console.log(isAuthenticated)
 
@@ -83,25 +90,26 @@ function App() {
 
 
   const handleAuthenticated = async (authClient: AuthClient) => {
-    const identity1 = (await authClient?.getIdentity()) as unknown as Identity;
-    const identity = identity1;
-    setIdentity(identity1);
+    console.log("handling authenticated")
+    const temp_identity = (await authClient?.getIdentity()) as unknown as Identity;
+    const identity = temp_identity;
+    setIdentity(temp_identity);
 
 
-    const futura_actor1 = createActor(canisterId as string, {
+    const temp_futura_actor = createActor(canisterId as string, {
       agentOptions: {
         identity,
       },
     });
 
-    setFutura_Actor(futura_actor1);
+    setFutura_Actor(temp_futura_actor);
     
     // const response = await futura_actor1?.whoami();
     // console.log(response?.toString())
 
     // Invalidate identity then render login when user goes idle
     authClient?.idleManager?.registerCallback(() => {
-      Actor.agentOf(futura_actor1)?.invalidateIdentity?.();
+      Actor.agentOf(temp_futura_actor)?.invalidateIdentity?.();
       //renderIndex();
       console.log("user timeout");
     });
@@ -109,7 +117,14 @@ function App() {
 
   const deauthenticate = async() => {
     authClient?.logout();
-    setIsAuthenticated(false)
+    setIsAuthenticated(await authClient?.isAuthenticated());
+    handleAuthenticated(authClient as AuthClient)
+    // flushSync(() => {
+    //   setIsAuthenticated(false);
+    // });
+    // setIsAuthenticated(false)
+    // setIdentity(undefined);
+    // setFutura_Actor(undefined);
   }
 
 
