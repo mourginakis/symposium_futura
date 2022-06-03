@@ -79,10 +79,34 @@ h6 {
     margin-top: 20px;
 }
 
+.sidebar div#bio {
+    height: 80px;
+}
+
+
+// #maincontent {
+//     margin-left: 300px;
+// }
+
+.sidebar p#idbox {
+    position: absolute;
+    writing-mode: vertical-rl;
+    text-orientation: upright;
+    margin-top: -131px;
+    margin-left: -2rem;
+    height: 271px;
+    font-size: 0.1em;
+    letter-spacing: -2px;
+}
+
 
 .main {
-    margin-left:  200px;
+    margin-left:  256px;
     margin-right: 80px;
+}
+
+.container {
+    margin: 0 0 0 30px;
 }
 
 #authButton:hover {
