@@ -10,9 +10,7 @@ import { flushSync } from "react-dom";
 import exampleposts from "../assets/exampleposts.json";
 import '../assets/css/symposium.scss';
 
-
-
-const audio = new Audio("../ill-find-you-crystal-river-inmysleep.mp3");
+import {animateIn, animateOut} from "./animations"
 
 
 
@@ -153,13 +151,16 @@ function App() {
 }
 
 
-
 function NavBar() {
   return (
-    <nav>
+    <nav id="nav">
       <a href="/">
         <div className="logotitle">
-          <img src="img/generic_quill.png" alt="quill" />
+          {/* <img src="img/cypher/cool_cypher.svg" alt="cypher" /> */}
+          {/* <img src="img/generic_quill.png" alt="quill"/> */}
+          <video autoPlay loop>
+            <source src="img/cypher/cool_cypher_encoded.webm" type="video/webm"></source>
+          </video>
           <div>
             <h2>SYMPOSIUM FUTURA</h2>
             <p>community knowledge engine</p>
@@ -200,39 +201,6 @@ function ProfileCard(props) {
     "and find the truth",
   ];
 
-  function animateIn() {
-    const elem = document.getElementById("maincontent");
-    elem!.animate([{
-      transform: 'translate(42px, 0px)',
-      filter: 'blur(10px)',
-    }], {
-      duration: 1000,
-      fill: 'forwards',
-      easing: 'ease-out',
-    })
-    // elem!.style.marginLeft = "300px";
-    // elem!.style.filter = "blur(1px)";
-    // elem!.style.transform = "translate(42px, 0px)";
-    audio.play();
-  }
-
-  function animateOut() {
-    //clearInterval(this.timerID);
-    const elem = document.getElementById("maincontent");
-    elem!.animate([{
-      transform: 'translate(0px, 0px)',
-      filter: 'blur(0px)',
-    }], {
-      duration: 0,
-      fill: 'forwards',
-      easing: 'ease-out',
-    })
-    // elem!.style.transform = "translate(0px, 0px)";
-    // elem!.style.filter = "blur(0px)";
-    audio.pause();
-    audio.load();
-  }
-
   const pseudonym = props.pseudonym || "ANONYMOUS";
   const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
   const money = props.money || "$₣: 200 ∞";
@@ -254,14 +222,27 @@ function ProfileCard(props) {
   function UnauthenticatedView() {
     return (
       <div className="sidebar">
-        <img src="img/hellorobotsomitsleep-cropped.jpeg" alt="profile" />
-        <p id="idbox">{id}</p>
-        <h5 id="pseudonym">{pseudonym}</h5> 
-        <div id="bio">{bio}</div>
-        <p id="money">{money}</p>
-        <button id="authButton" onClick={props.authenticate}
-          onMouseOver={() => animateIn()}
-          onMouseOut={() => animateOut()}>AUTHENTICATE</button>
+        <div id="content">
+          <img src="img/hellorobotsomitsleep-cropped.jpeg" alt="profile" />
+          <p id="idbox">{id}</p>
+          <h5 id="pseudonym">{pseudonym}</h5>
+          <div id="bio">{bio}</div>
+          <p id="money">{money}</p>
+          <button
+            id="authButton"
+            onClick={props.authenticate}
+            onMouseOver={() => animateIn()}
+            onMouseOut={() => animateOut()}
+          >
+            AUTHENTICATE
+          </button>
+        </div>
+        <div id="colordrawing">
+        <svg>
+          <rect id="rectangle1" className="shape"/>
+          {/* <line className="shape" x1="0" x2="500"/> */}
+          </svg>
+        </div>
       </div>
     );
   }

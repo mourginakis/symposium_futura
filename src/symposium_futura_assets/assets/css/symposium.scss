@@ -1,6 +1,7 @@
 /*DEBUG*/
-// $primary-color: orange;
+$primary-color: orange;
 // * { border: 1px dotted $primary-color;}
+// * { box-sizing: border-box; }
 
 /* body { */
     /*font-family: courier;*/
@@ -25,10 +26,17 @@ nav a, a:hover {
 }
 
 nav img {
-    width: 60px;
-    height: 60px;
-    margin: 0px 20px 0px 0px;
+    width: 120px;
+    height: 120px;
+    margin: -30px 0px 0px 0px;
 }
+
+nav video {
+    width: 90px;
+    height: 90px;
+    margin: -16px 5px 0px 0px;
+}
+
 
 nav p {
     text-align: right;
@@ -64,15 +72,49 @@ h6 {
 .sidebar {
     top: 120px;
     width:  220px;
+    height: 400px;
     position: fixed;
     z-index: 1;
     left: 40px;
     box-sizing: border-box;
-    padding: 0px 20px 20px 20px;
     text-align: center;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-
 }
+
+#content {
+    padding: 0px 20px 20px 20px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    position: absolute;
+    box-sizing: border-box;
+    height: 90%;
+    width: 100%;
+    z-index: 2;
+    background-color: white;
+}
+
+#colordrawing {
+    position: absolute;
+    // width: 100%;
+    // height: 100%;
+    // bottom: 0;
+}
+
+#colordrawing svg {
+    width: 230px;
+    height: 400px;
+}
+
+.shape {
+    stroke-width: 8px;
+    fill: transparent;
+  stroke: #0ea59b;
+  width: 224px;
+  height: 364px;
+  stroke-dasharray: 140 540;
+  stroke-dashoffset: -600;
+  transition: stroke-width 1s, stroke-dashoffset 1s, stroke-dasharray 1s;
+  
+}
+
 
 .sidebar img {
     width: 120px;
@@ -84,9 +126,6 @@ h6 {
 }
 
 
-// #maincontent {
-//     margin-left: 300px;
-// }
 
 .sidebar p#idbox {
     position: absolute;
@@ -146,93 +185,136 @@ h6 {
 
 
 
+// .shape {
+//     stroke-dasharray: 140 540;
+//     stroke-dashoffset: -600;
+//     stroke-width: 8px;
+//     fill: transparent;
+//     stroke: #000000;
+//     border-bottom: 5px solid black;
+//     transition: stroke-width 1s, stroke-dashoffset 1s, stroke-dasharray 1s;
+//   }
 
 
-// .sidebar::before {
+// $color-1: rgb(255, 0, 0, 0.5);
+// $color-2: rgba(46, 162, 240, 0.4);
+// $color-3: rgba(240, 46, 170, 0.4);
+
+// // $color-c1: rgba(240, 46, 170, 0.7);
+
+// $border-fatness: 10px;
+
+
+
+
+// div #one::after{
 //     content: "";
+//     border: $border-fatness solid transparent;
+//     // background: transparent;
+//     width: 50%;
+//     height: 50%;
 //     position: absolute;
-//     top: -2px;
-//     left: -2px;
-//     width: 0;
-//     height: 0;
-//     background: transparent;
-//     border: 2px solid transparent;
+//     bottom: -$border-fatness*2;
+//     left: 0;
+//     z-index: -10;
 // }
 
-// .sidebar:hover::before {
-//     animation: animate 2s ease-out forwards;
+
+// div #two::after{
+//     content: "";
+//     border: $border-fatness solid transparent;
+//     // background: transparent;
+//     width: 50%;
+//     height: 50%;
+//     position: absolute;
+//     bottom: 0;
+//     left: 0;
+//     bottom: -$border-fatness;
+//     left: 0;
+//     z-index: -10;
 // }
 
-// @keyframes animate {
+
+
+//  div #one:hover::after {
+//      animation: animate3 1s ease-out forwards;
+     
+//  }
+
+//  div #two:hover::after {
+//     animation: animate2 1.3s ease-out forwards;
+    
+// }
+
+// // div #three::after{
+// //     border: rgba(46, 143, 240, 0.2) 5px solid;
+// // }
+
+
+// @keyframes animate3 {
 //     0% {
 //         width: 0;
 //         height: 0;
-//         border-top-color: black;
+//         border-top-color: transparent;
 //         border-right-color: transparent;
-//         border-bottom-color: transparent;
+//         border-bottom-color: $color-3;
 //         border-left-color: transparent;
 //     }
 
 //     50% {
 //         width: 100%;
 //         height: 0;
-//         border-top-color: black;
-//         border-right-color: black;
-//         border-bottom-color: transparent;
+//         border-top-color: transparent;
+//         border-right-color: transparent;
+//         border-bottom-color: $color-3;
+//         border-left-color: transparent;
+//     }
+//     50.1% {
+//         width: 100%;
+//         height: 0;
+//         border-top-color: transparent;
+//         border-right-color: $color-3;
+//         border-bottom-color: $color-3;
 //         border-left-color: transparent;
 //     }
 
 //     100% {
 //         width: 100%;
-//         height: 100%;
-//         border-top-color: black;
-//         border-right-color: black;
-//         border-bottom-color: transparent;
+//         height: 115%;
+//         border-top-color: transparent;
+//         border-right-color: $color-3;
+//         border-bottom-color: $color-3;
 //         border-left-color: transparent;
 //     }
 // }
 
-// .sidebar::after {
-//     content: "";
-//     position: absolute;
-//     top: -2px;
-//     left: -2px;
-//     width: 0;
-//     height: 0;
-//     background: transparent;
-//     border: 2px solid transparent;
-// }
-
-// .sidebar:hover::after {
-//     animation: animates 1s ease-out forwards;
-// }
-
-// @keyframes animates {
+// @keyframes animate2 {
 //     0% {
 //         width: 0;
 //         height: 0;
 //         border-top-color: transparent;
 //         border-right-color: transparent;
-//         border-bottom-color: transparent;
-//         border-left-color: black;
+//         border-bottom-color: $color-2;
+//         border-left-color: transparent;
 //     }
 
 //     50% {
-//         width: 0;
-//         height: 100%;
+//         width: 110%;
+//         height: 0;
 //         border-top-color: transparent;
-//         border-right-color: transparent;
-//         border-bottom-color: black;
-//         border-left-color: black;
+//         border-right-color: $color-2;
+//         border-bottom-color: $color-2;
+//         border-left-color: transparent;
 //     }
 
 //     100% {
-//         width: 100%;
-//         height: 100%;
+//         width: 110%;
+//         height: 120%;
 //         border-top-color: transparent;
-//         border-right-color: transparent;
-//         border-bottom-color: black;
-//         border-left-color: black;
+//         border-right-color: $color-2;
+//         border-bottom-color: $color-2;
+//         border-left-color: transparent;
 //     }
 // }
+
 
