@@ -10,8 +10,8 @@ import { flushSync } from "react-dom";
 import exampleposts from "../assets/exampleposts.json";
 import '../assets/css/symposium.scss';
 
-import {animateIn, animateOut} from "./animations"
 
+import {animateIn, animateOut} from "./animations"
 
 
 interface AuthContextInterface {
@@ -151,6 +151,7 @@ function App() {
 }
 
 
+
 function NavBar() {
   return (
     <nav id="nav">
@@ -204,6 +205,8 @@ function ProfileCard(props) {
   const pseudonym = props.pseudonym || "ANONYMOUS";
   const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
   const money = props.money || "$₣: 200 ∞";
+
+
 
 
   function AuthenticatedView() {
