@@ -11,7 +11,7 @@ import exampleposts from "../assets/exampleposts.json";
 import '../assets/css/symposium.scss';
 
 
-import {animateIn, animateOut} from "./animations"
+import {animateIn, animateOut, Ribbons} from "./animations"
 
 
 interface AuthContextInterface {
@@ -194,6 +194,10 @@ function ProfileCard(props) {
     };
     init();
   }, [isAuthenticated]);
+
+  useEffect(() =>
+  {Ribbons.init();})
+
   // this needs to be stopped from re-rendering during the animation
 
   const placeholders = [
@@ -206,8 +210,6 @@ function ProfileCard(props) {
   const pseudonym = props.pseudonym || "ANONYMOUS";
   const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
   const money = props.money || "$₣: 200 ∞";
-  
-
 
 
 
@@ -261,6 +263,7 @@ function BorderAnimation(props) {
         <rect id="rectangle1" className="shape" />
         <rect id="rectangle2" className="shape" />
         <rect id="rectangle3" className="shape" />
+        <rect id="rectangle4" className="shape" />
         {/* <line className="shape" x1="0" x2="500"/> */}
       </svg>
   );
