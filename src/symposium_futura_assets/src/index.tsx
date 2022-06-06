@@ -1,7 +1,7 @@
 import { symposium_futura, canisterId, createActor } from "../../declarations/symposium_futura";
 import { _SERVICE } from "../../declarations/symposium_futura/symposium_futura.did";
 import { AuthClient } from "@dfinity/auth-client";
-import { Actor, Identity, ActorSubclass, /*HttpAgent*/ } from "@dfinity/agent";
+import { Actor, Identity, ActorSubclass, ProxyStubAgent, /*HttpAgent*/ } from "@dfinity/agent";
 
 
 import React, {useEffect, useState, useContext} from "react";
@@ -47,7 +47,9 @@ function App() {
   const [myData, setMyData] = useState<number>(0);
   const [myString, setMyString] = useState<string | undefined>("Oogabooga");
 
-  console.log("rerendered");
+  const [navChoice, setNavChoice] = useState<string>("home");
+
+  console.log(navChoice)
 
 
   useEffect(() => {
@@ -130,32 +132,46 @@ function App() {
   // Rendering 
     return (
       <AuthContext.Provider value={loginAuthContext}>
-          <div>
-          <NavBar />
+          <NavBar navSelection={setNavChoice}/>
           <ProfileCard authenticate={authenticate} deauthenticate={deauthenticate}/>
-            <div className="main" id="maincontent">
-              <div className="container">
-                {exampleposts.map((post) => (
-                <SinglePost
-                key={post.id}
-                title={post.title}
-                author={post.author}
-                content={post.content}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
+          <PageContent navSelection={navChoice}/>
       </AuthContext.Provider>
     );
 }
 
 
+function PageContent(props) {
+  if (props.navSelection == "about") {
+    return (
+      <div className="main" id="maincontent">
+        <div className="container">
+          <p>about page!!!</p>
+        </div>
+      </div>
+    );
+  } else {
+    // home
+    return (
+      <div className="main" id="maincontent">
+        <div className="container">
+          {exampleposts.map((post) => (
+            <SinglePost
+              key={post.id}
+              title={post.title}
+              author={post.author}
+              content={post.content}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+}
 
-function NavBar() {
+function NavBar(props) {
   return (
     <nav id="nav">
-      <a href="/">
+      <a href="#" onClick={() => props.navSelection("home")}>
         <div className="logotitle">
           {/* <img src="img/cypher/cool_cypher.svg" alt="cypher" /> */}
           {/* <img src="img/generic_quill.png" alt="quill"/> */}
@@ -169,7 +185,7 @@ function NavBar() {
         </div>
       </a>
       <div className="about">
-        <a href="#about">
+        <a href="#" onClick={() => props.navSelection("about")}>
           <h5>about</h5>
         </a>
       </div>
