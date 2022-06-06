@@ -194,6 +194,7 @@ function ProfileCard(props) {
     };
     init();
   }, [isAuthenticated]);
+  // this needs to be stopped from re-rendering during the animation
 
   const placeholders = [
     "when you're ready to change the world",
@@ -205,6 +206,7 @@ function ProfileCard(props) {
   const pseudonym = props.pseudonym || "ANONYMOUS";
   const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
   const money = props.money || "$₣: 200 ∞";
+  
 
 
 
@@ -240,12 +242,7 @@ function ProfileCard(props) {
             AUTHENTICATE
           </button>
         </div>
-        <div id="colordrawing">
-        <svg>
-          <rect id="rectangle1" className="shape"/>
-          {/* <line className="shape" x1="0" x2="500"/> */}
-          </svg>
-        </div>
+       <BorderAnimation />
       </div>
     );
   }
@@ -255,6 +252,18 @@ function ProfileCard(props) {
   } else {
     return <UnauthenticatedView />;
   }
+}
+
+
+function BorderAnimation(props) {
+  return (
+      <svg id="colordrawing">
+        <rect id="rectangle1" className="shape" />
+        <rect id="rectangle2" className="shape" />
+        <rect id="rectangle3" className="shape" />
+        {/* <line className="shape" x1="0" x2="500"/> */}
+      </svg>
+  );
 }
 
 

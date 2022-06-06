@@ -4,6 +4,32 @@ const audio = new Audio("../ill-find-you-crystal-river-inmysleep.mp3");
 
 
 
+
+const Rectangle1 = {
+  getElement() { return document.getElementById("rectangle2")},
+  init() {
+    const svgcontainer = document.getElementById("colordrawing");
+    svgcontainer!.style.width = "230px";
+    svgcontainer!.style.height = "400px";
+
+
+    const styles = {
+      strokeWidth: "8px",
+      stroke: "rgba(255, 255, 0, 0.9)",
+      width: "224px",
+      height: "364px",
+      strokeDasharray: "140 540",
+      strokeDashoffset: "-600",
+      transition: "stroke-dashoffset 1s, stroke-dasharray 1s",
+    }
+
+
+    const element = this.getElement();
+    Object.assign(element!.style, styles);
+  }
+}
+
+
 const AnimateBorder = {
   getElement() {return document.getElementById("rectangle1")},
   animateIn() {
@@ -76,13 +102,13 @@ const AnimateContent = {
 
 
 export function animateIn() {
+  Rectangle1.init();
+  AnimateBorder.animateIn();
+  AnimateNav.animateIn();
+  AnimateContent.animateIn();
 
-    AnimateBorder.animateIn();
-    AnimateNav.animateIn();
-    AnimateContent.animateIn();
-
-    audio.play();
-  }
+  audio.play();
+}
 
   export function animateOut() {
 
