@@ -88,7 +88,7 @@ export const Ribbons = {
 };
 
 
-const AnimateBorder = {
+export const AnimateBorder = {
   animateIn() {
     let elemShape = document.getElementById("rectangle1");
     elemShape!.style.transition = "stroke-dashoffset 6s, stroke-dasharray 6s ease-out";
@@ -136,7 +136,7 @@ const AnimateBorder = {
 }
 
 
-const AnimateNav = {
+export const AnimateNav = {
   getElement() {return document.getElementById("nav")},
   animateIn() {
     const elemnav = this.getElement();
@@ -162,7 +162,7 @@ const AnimateNav = {
   }
 }
 
-const AnimateContent = {
+export const AnimateContent = {
   getElement() {return document.getElementById("maincontent")},
   animateIn() {
     const elem = this.getElement();

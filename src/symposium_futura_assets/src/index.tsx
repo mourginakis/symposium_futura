@@ -11,7 +11,7 @@ import exampleposts from "../assets/exampleposts.json";
 import '../assets/css/symposium.scss';
 
 
-import {animateIn, animateOut, Ribbons} from "./animations"
+import {animateIn, animateOut, Ribbons, AnimateNav, AnimateBorder, AnimateContent} from "./animations"
 
 
 interface AuthContextInterface {
@@ -49,7 +49,7 @@ function App() {
 
   const [navChoice, setNavChoice] = useState<string>("home");
 
-  console.log(navChoice)
+  console.log("rerendering entire app")
 
 
   useEffect(() => {
@@ -141,6 +141,8 @@ function App() {
 
 
 function PageContent(props) {
+  const {isAuthenticated, futura_actor} = useContext(AuthContext);
+
   if (props.navSelection == "about") {
     return (
       <div className="main" id="maincontent">
@@ -154,6 +156,7 @@ function PageContent(props) {
     return (
       <div className="main" id="maincontent">
         <div className="container">
+          {isAuthenticated ? <NewPost /> : <div />}
           {exampleposts.map((post) => (
             <SinglePost
               key={post.id}
@@ -198,21 +201,30 @@ function NavBar(props) {
 
 function ProfileCard(props) {
   const {isAuthenticated, futura_actor} = useContext(AuthContext);
-  const [name, setName] = useState<string>();
-  const [id, setId] = useState<string>();
+  const [name, setName] = useState<string>("ANONYMOUS");
+  const [id, setId] = useState<string | undefined>('2vxsx-fae');
+  const [bio, setBio] = useState<string>();
+  console.log("rerendering profilecard")
 
   useEffect(() => {
     const init = async () => {
-      setName("-----")
-      const response = await futura_actor?.whoami();
-      setId(response?.toString());
-      setName("EINSTEIN");
+      if (isAuthenticated) {
+        setName("-----")
+        const response = await futura_actor?.whoami();
+        setId(response?.toString());
+        setName("YOU");
+        setBio("your bio");
+      }
     };
     init();
   }, [isAuthenticated]);
 
   useEffect(() =>
-  {Ribbons.init();})
+  {
+    if (!isAuthenticated) {
+      Ribbons.init();
+    }
+  });
 
   // this needs to be stopped from re-rendering during the animation
 
@@ -224,20 +236,26 @@ function ProfileCard(props) {
   ];
 
   const pseudonym = props.pseudonym || "ANONYMOUS";
-  const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
+  // const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
   const money = props.money || "$₣: 200 ∞";
 
-
+  function makeLoggedOutBio() {
+    return (<p>wake me<br />{rand_nth(placeholders)}</p>);
+  }
 
   function AuthenticatedView() {
+    AnimateNav.animateOut();
+    AnimateContent.animateOut();
     return (
       <div className="sidebar">
+        <div id="content">
         <img src="img/hellorobotsomitsleep-cropped.jpeg" alt="profile" />
         <p id="idbox">{id}</p>
         <h5 id="pseudonym">{name}</h5>
         <div id="bio">{bio}</div>
         <p id="money">{money}</p>
         <button id="authButton" onClick={props.deauthenticate}>DEAUTHENTICATE</button>
+      </div>
       </div>
     )
   }
@@ -248,8 +266,8 @@ function ProfileCard(props) {
         <div id="content">
           <img src="img/hellorobotsomitsleep-cropped.jpeg" alt="profile" />
           <p id="idbox">{id}</p>
-          <h5 id="pseudonym">{pseudonym}</h5>
-          <div id="bio">{bio}</div>
+          <h5 id="pseudonym">{name}</h5>
+          <div id="bio">{makeLoggedOutBio()}</div>
           <p id="money">{money}</p>
           <button
             id="authButton"
@@ -294,8 +312,26 @@ function SinglePost(props) {
       <h4>{props.title}</h4>
       <h6>{props.author}</h6>
       <p>{props.content}</p>
+      <hr />
     </div>
   );
+}
+
+function NewPost(props) {
+  return (
+    <>
+    <form>
+      <div className="row">
+      <label htmlFor="title">Title</label>
+      <input className="u-full-width" type="text" id="newPostContent" />
+      <label htmlFor="exampleMessage">Content</label>
+      <textarea className="u-full-width" placeholder="" id="newPostContent"></textarea>
+      <input type="submit" value="Submit" />
+      </div>
+    </form>
+    <hr />
+    </>
+  )
 }
 
 
