@@ -110,7 +110,11 @@ export default function App() {
       <AuthContext.Provider value={loginAuthContext}>
           <NavBar navSelection={setNavChoice}/>
           <ProfileCard authenticate={authenticate} deauthenticate={deauthenticate}/>
-          <PageContent navSelection={navChoice}/>
+          <div className="main" id="maincontent">
+            <div className="container">
+                <PageContent navSelection={navChoice}/>
+            </div>
+        </div>
       </AuthContext.Provider>
     );
 }

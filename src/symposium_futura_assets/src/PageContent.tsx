@@ -3,38 +3,60 @@ import AuthContext from "./auth";
 import exampleposts from "../assets/exampleposts.json";
 
 
+
+
 function PageContent(props) {
-    const {isAuthenticated, futura_actor} = useContext(AuthContext);
   
     if (props.navSelection == "about") {
-      return (
-        <div className="main" id="maincontent">
-          <div className="container">
-            <p>about page!!!</p>
-          </div>
-        </div>
-      );
+      return <AboutContent />
+    } else if (props.navSelection == "home") {
+      return <HomeContent />
     } else {
-      // home
-      return (
-        <div className="main" id="maincontent">
-          <div className="container">
-            {isAuthenticated ? <NewPost /> : <div />}
-            {exampleposts.map((post) => (
-              <SinglePost
-                key={post.id}
-                title={post.title}
-                author={post.author}
-                content={post.content}
-              />
-            ))}
-          </div>
-        </div>
-      );
+        return <p>routing error</p>
     }
   }
   
+
+  function AboutContent() {
+    return <p>about page!!!</p>;
+  }
   
+
+
+
+  function HomeContent() {
+    const { isAuthenticated, futura_actor } = useContext(AuthContext);
+
+    const [showNewPost, setShowNewPost] = useState(false);
+
+    // TODO: give the HR element a box-shadow with some css so it looks 3D
+
+    return (
+      <>
+        {isAuthenticated && (
+          <><button
+            onClick={() => {
+              setShowNewPost(!showNewPost);
+            }}
+          >
+            I DO NOTHING!
+          </button>
+          {String(showNewPost)}
+          <hr />
+          </>
+        )}
+        {/* {isAuthenticated ? <NewPost /> : <div />} */}
+        {exampleposts.map((post) => (
+          <SinglePost
+            key={post.id}
+            title={post.title}
+            author={post.author}
+            content={post.content}
+          />
+        ))}
+      </>
+    );
+  }
   
   
   
