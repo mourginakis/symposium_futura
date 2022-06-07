@@ -1,20 +1,9 @@
 const audio = new Audio("../ill-find-you-crystal-river-inmysleep.mp3");
 
 
-class Rectangle {
-  element: HTMLElement | null;
-
-  constructor(elementid) {
-    this.element = document.getElementById(elementid);
-  }
-
-  
-
-}
 
 
-
-export const Ribbons = {
+export const AnimateRibbons = {
   // getElement() { return document.getElementById("rectangle2")},
   init() {
     const contentbox_height = document.getElementById("content")!.clientHeight;
@@ -85,10 +74,6 @@ export const Ribbons = {
     Object.assign(document.getElementById("rectangle3")!.style, settings[2]);
     Object.assign(document.getElementById("rectangle4")!.style, settings[3]);
   },
-};
-
-
-export const AnimateBorder = {
   animateIn() {
     let elemShape = document.getElementById("rectangle1");
     elemShape!.style.transition = "stroke-dashoffset 6s, stroke-dasharray 6s ease-out";
@@ -192,7 +177,7 @@ export const AnimateContent = {
 
 export function animateIn() {
   // Ribbons.init();
-  AnimateBorder.animateIn();
+  AnimateRibbons.animateIn();
   AnimateNav.animateIn();
   AnimateContent.animateIn();
 
@@ -200,7 +185,7 @@ export function animateIn() {
 }
 
 export function animateOut() {
-  AnimateBorder.animateOut();
+  AnimateRibbons.animateOut();
   AnimateNav.animateOut();
   AnimateContent.animateOut();
 
