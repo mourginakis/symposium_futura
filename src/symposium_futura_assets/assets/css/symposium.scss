@@ -122,8 +122,8 @@ h6 {
 
 
 .sidebar img {
-    width: 120px;
-    margin-top: 20px;
+    width: 80px;
+    margin-top: 30px;
 }
 
 .sidebar div#bio {
@@ -149,11 +149,44 @@ h6 {
     margin-right: 80px;
 }
 
+
+
+.dropdown {
+    // background: rgb(239, 15, 15); 
+    overflow: hidden;
+    transition: max-height 0.15s ease-out;
+    max-height: 0;
+}
+
+
+.dropdown-active {
+    // background: rgb(239, 15, 15); 
+    transition: max-height 0.25s ease-in;
+    max-height: 500px;
+    overflow: auto;
+}
+
+textarea {
+    min-height: 220px;
+}
+
+.submitpost {
+    background-color: red;
+}
+
+
 .container {
     margin: 0 0 0 30px;
 }
 
-#authButton:hover {
+// #authButton:hover {
+//     animation-duration: 1s;
+//     animation-name: magenta-borderr;
+//     animation-iteration-count: 1;
+//     animation-fill-mode: forwards;
+// }
+
+.authButtonAnimation:hover {
     animation-duration: 1s;
     animation-name: magenta-borderr;
     animation-iteration-count: 1;

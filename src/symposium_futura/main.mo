@@ -5,6 +5,8 @@ import Time "mo:base/Time";
 import List "mo:base/List";
 import Trie "mo:base/Trie";
 import Iter "mo:base/Iter";
+import Option "mo:base/Option";
+import Debug "mo:base/Debug";
 
 import Cycles "mo:base/ExperimentalCycles";
 import Nat "mo:base/Nat";
@@ -20,13 +22,13 @@ actor {
 
     // type definitions
     type Pseudonym = Text;
-    type PostList = List.List<Post>;
+    public type PostList = List.List<Post>;
 
-    type Post = {
+    public type Post = {
         title: Text;
-        // author: Principal;
-        postdate: Time.Time; // Nanoseconds since 1970
-        lastedited: Time.Time;
+        author: Principal;
+        // postdate: Time.Time; // Nanoseconds since 1970
+        // lastedited: Time.Time;
         content: Text;
         // tags: List.List<Text>;
     };
@@ -40,6 +42,8 @@ actor {
     //    we may never know! Only triemaps can be stable i guess
     private /*stable?*/ var DB = Map.HashMap<Principal, PostList>(10, Principal.equal, Principal.hash); 
     private var pseudonyms = Map.HashMap<Principal, Text>(10, Principal.equal, Principal.hash);
+
+    private var simplemap = Map.HashMap<Text, Text>(10, Text.equal, Text.hash);
 
 
 
@@ -55,12 +59,12 @@ actor {
 
     
     // get_pseudonym
-    //    returns 'Anonymous' for users not logged in
+    //    returns 'ANONYMOUS' for users not logged in
     //    returns the user's pseudonym, or, if null, returns the Principal ID.
     public shared query ({caller}) func get_pseudonym() : async Text {
-        if (Principal.isAnonymous(caller)) {return "Anonymous";};
+        if (Principal.isAnonymous(caller)) {return "ANONYMOUS";};
         switch (pseudonyms.get(caller)) {
-            case (null) Principal.toText(caller);
+            case (null) "YOU";
             case (?result) result;
         }
     };
@@ -81,29 +85,40 @@ actor {
     // ----------------------------
     /* __INTERFACE__
        public query func get_all_posts() : async () {}
-
        public query func get_all_posts_by_author() : async () {}
-
        public shared ({caller}) func make_post() : async Bool {}
-
        public shared ({caller}) func delete_post() : async Bool {}
-
        public shared ({caller}) func edit_post() : async Bool {}
      */
 
-    // make_post
-    //   makes a post object and adds it to the DB hashmap, sorted by author
-    public shared ({caller}) func make_post() : async () {
-        DB.put( caller, List.nil<Post>() );
-    };
+    // add_post
+    //   adds a post object to the PostList object indexed by the DB hashmap, by author
+    public shared ({caller}) func add_post(title: Text, content: Text) : async Bool {
+        // assert not Principal.isAnonymous(caller);
 
-    // get_all_posts
-    //   gets a list of all post objects
-    public query func get_all_posts() : async Bool {
-        // ["asdf", "asdf", "asdfsdfdas"];
-        // DB.vals().toArray()    
+        let newPost : Post = {
+            title = title;
+            author = caller;
+            content = content;
+        };
+
+        let userPosts : List.List<Post> = Option.get(DB.get(caller), List.nil<Post>());
+        DB.put(caller, List.push(newPost, userPosts));
         true
     };
+
+
+    
+    // get_all_posts
+    //   gets a list of all post objects
+    public query func get_all_posts() : async List.List<PostList> {
+        //DB.vals(); //.toArray();
+        // Iter.toList(simplemap.vals())
+        Iter.toList(DB.vals())
+        
+    };
+
+    
 
 
 

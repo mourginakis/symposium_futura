@@ -19,6 +19,11 @@ function NavBar(props) {
             <h5>about</h5>
           </a>
         </div>
+        <div className="console">
+          <a href="#" onClick={() => props.navSelection("console")}>
+            <h5>console</h5>
+          </a>
+        </div>
       </nav>
     );
   }

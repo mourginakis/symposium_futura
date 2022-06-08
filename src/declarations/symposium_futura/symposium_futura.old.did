@@ -1,9 +1,30 @@
+type PostList = 
+ opt record {
+       Post;
+       List_1;
+     };
+type Post = 
+ record {
+   author: principal;
+   content: text;
+   title: text;
+ };
+type List_1 = 
+ opt record {
+       Post;
+       List_1;
+     };
+type List = 
+ opt record {
+       PostList;
+       List;
+     };
 service : {
-  get_all_posts: () -> (bool) query;
+  add_post: (text, text) -> ();
+  get_all_posts: () -> (List) query;
   get_pseudonym: () -> (text) query;
-  make_post: () -> ();
   update_pseudonym: (text) -> ();
   wallet_balance: () -> (nat);
   wallet_receive: () -> (record {accepted: nat64;});
-  whoami: () -> (principal) query;
+  whoami: () -> (principal);
 }
