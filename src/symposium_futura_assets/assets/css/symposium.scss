@@ -13,8 +13,8 @@ $primary-color: orange;
     --ribbon-color-one: rgba(0, 255, 191, 0.5);
     --ribbon-color-two: rgba(0, 195, 255, 0.5);
     --ribbon-color-three: rgba(240, 46, 170, 0.6);
-    --console-color: rgba(106, 106, 106, 0.6);
-    --console-text-color: white;
+    --console-color: rgba(255, 255, 255, 1);
+    --console-text-color: rgb(0, 0, 0);
 }
 
 
@@ -227,13 +227,13 @@ textarea {
 
 .consoleBox {
     /* give the div styling to make it look like a terminal box */
-    border: 1px solid #ccc;
+    border: 2px solid #ccc;
     font-family: monospace;
     padding: 10px;
     background-color: var(--console-color);
     color: var(--console-text-color);
     list-style-type: none;
-    height: 600px;
+    height: 300px;
     overflow: auto;
 }
 
@@ -250,17 +250,28 @@ textarea {
     bottom: 0px;
     position: absolute;
     width: 90%;
+    margin:2px;
+    background-color: var(--console-color);
+    left: 0;
 }
 
 .noMargin input {
-    background-color: var(--console-color);
-    border: 0px;
+    // border: 0px;
     border-radius: 0px;
     width: 90%;
+    border: none; 
+    height: 30px;
+}
+
+
+input[type="console"]:focus {
+    outline: none;
+    border: none;
 }
 
 
 .tilde {
     margin-right: 10px;
+    margin-left: 5px;
     color: tan;
 }

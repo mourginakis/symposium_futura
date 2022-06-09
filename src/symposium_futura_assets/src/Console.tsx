@@ -1,33 +1,105 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { flushSync } from "react-dom";
 import AuthContext from "./auth";
+
+
+
+ const graphic = [
+"┌─┐┬\xa0┬┌┬┐┌─┐┌─┐┌─┐┬┬\xa0┬┌┬┐\xa0\xa0",
+"└─┐└┬┘│││├─┘│\xa0│└─┐││\xa0││││\xa0\xa0",
+"└─┘\xa0┴\xa0┴\xa0┴┴\xa0\xa0└─┘└─┘┴└─┘┴\xa0┴\xa0\xa0",
+"┌─┐┬\xa0┬┌┬┐┬\xa0┬┬─┐┌─┐\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0",
+"├┤\xa0│\xa0│\xa0│\xa0│\xa0│├┬┘├─┤\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0",
+"└\xa0\xa0└─┘\xa0┴\xa0└─┘┴└─┴\xa0┴\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0",
+
+ ];
+
+const help = [
+    "Things you can do!",
+    "\xa0\xa0\xa0show <bio|pseudonym|principal>",
+    "\xa0\xa0\xa0change <bio|pseudonym> 'new pseudonym'",
+    "\xa0\xa0\xa0example: change bio 'I rock!'",
+];
+
+//
+// Parses a command line input like 'show bio'
+// or like 'change bio "I am a human". 
+// Splits on whitespace unless there is a quotation.
+function parse_args(s: string) {
+    let regex = /"([^"]*)"|(\S+)/g;
+    let result = (s.match(regex) || []).map(m => m.replace(regex, '$1$2'));
+    return result;
+}
+
+
 
 function Console(props) {
   /* usestate for a const called 'history' and 'setHistory' */
   const { isAuthenticated, futura_actor } = useContext(AuthContext);
+  const messagesEndRef = useRef<null | HTMLDivElement>(null); 
   const [command, setCommand] = useState<string>("");
   const [history, setHistory] = useState(
-      ["Symposium Futura Console - user settings",
-      "type 'help' for options",
+      ["Welcome! Console -- user settings adjustment",
+      ...graphic,
+      "type 'help' for more options'"
     ]);
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "auto" })
+      }
+      useEffect(scrollToBottom);
 
 
   const handleSubmit = (event) => {
     event.preventDefault();
     let oldCommand = command;
     let toDisplay = [oldCommand];
+    let parsed = parse_args(oldCommand);
+    // console.log(parse_args(oldCommand));
     // console.log(commandInput);
     setCommand("");
 
-    if (oldCommand == "help") {
-        let s = [
-            "Things you can do!",
-            "_  show <bio|name|principal>",
-            "_   change <bio|pseudonym> 'new pseudonym'",
-            "_   example: change bio 'I rock!'",
-        ];
-        toDisplay = toDisplay.concat(s);
+
+
+    // my god, fix this hell
+
+    if (parsed[0] == "help") {
+        toDisplay = toDisplay.concat(help);
         setHistory(history.concat(toDisplay));
+    } else if (parsed[0] == "show") {
+        if (parsed[1] == "bio") {
+            // not implemented
+            // futura_actor.get_pseudonym();
+            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            setHistory(history.concat(toDisplay));
+        } else if (parsed[1] == "pseudonym") {
+            // let pseudonym = futura_actor.get_pseudonym();
+            // needs to be called in an async fn
+            //setHistory(history.concat([pseudonym]));
+            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            setHistory(history.concat(toDisplay));
+        } else {
+            toDisplay = toDisplay.concat(["error - type 'help' for options"]);
+            setHistory(history.concat(toDisplay));
+        }
+    } else if (parsed[0] == "change") {
+        if (parsed[1] == "bio") {
+            // not implemented
+            // futura_actor.update_bio();
+            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            setHistory(history.concat(toDisplay));
+        } else if (parsed[1] == "pseudonym") {
+            // remove quotes
+            // const removed = parsed[3].replace(/"/g, '');
+            // futura_actor.update_pseudonym(removed);
+            // needs to be called in an async fn
+            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            setHistory(history.concat(toDisplay));
+
+        } else {
+            toDisplay = toDisplay.concat(["error - type 'help' for options"]);
+            setHistory(history.concat(toDisplay));
+        }
     } else {
         toDisplay = toDisplay.concat(["error - type 'help' for options"]);
         setHistory(history.concat(toDisplay));
@@ -54,11 +126,13 @@ function Console(props) {
           <li key={index}>{item}</li>
         ))}
       </ul>
+      <div ref={messagesEndRef} />
       <div className="noMargin">
       <form onSubmit={handleSubmit}>
             <span className="tilde">{">"}</span>
             <span className="consoleInput"><input
-              type="text"
+              type="console"
+              autoFocus={true}
               value={command}
               onChange={(e) => setCommand(e.target.value)}
             />
