@@ -3,7 +3,7 @@ import AuthContext from "./auth";
 import exampleposts from "../assets/exampleposts.json";
 
 import AboutContent from "./AboutContent";
-
+import Console from "./Console";
 
 
 
@@ -13,7 +13,7 @@ function PageContent(props) {
   } else if (props.navSelection == "home") {
     return <HomeContent />;
   } else if (props.navSelection == "console") {
-    return <p>in development</p>;
+    return <Console />;
   } else {
     return <p>routing error</p>;
   }

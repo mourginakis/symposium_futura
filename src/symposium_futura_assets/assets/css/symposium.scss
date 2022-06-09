@@ -13,6 +13,8 @@ $primary-color: orange;
     --ribbon-color-one: rgba(0, 255, 191, 0.5);
     --ribbon-color-two: rgba(0, 195, 255, 0.5);
     --ribbon-color-three: rgba(240, 46, 170, 0.6);
+    --console-color: rgba(106, 106, 106, 0.6);
+    --console-text-color: white;
 }
 
 
@@ -222,3 +224,43 @@ textarea {
 }
 
 
+
+.consoleBox {
+    /* give the div styling to make it look like a terminal box */
+    border: 1px solid #ccc;
+    font-family: monospace;
+    padding: 10px;
+    background-color: var(--console-color);
+    color: var(--console-text-color);
+    list-style-type: none;
+    height: 600px;
+    overflow: auto;
+}
+
+.consoleBox * {
+    margin: 0;
+}
+
+.consoleBox ul {
+    list-style-type: none;
+    margin: 0px 0px 20px 0px;
+}
+
+.noMargin {
+    bottom: 0px;
+    position: absolute;
+    width: 90%;
+}
+
+.noMargin input {
+    background-color: var(--console-color);
+    border: 0px;
+    border-radius: 0px;
+    width: 90%;
+}
+
+
+.tilde {
+    margin-right: 10px;
+    color: tan;
+}

@@ -55,7 +55,7 @@ function ProfileCard(props) {
       return (
         <div className="sidebar">
           <div id="content">
-          <img src="img/symposium_cat_noah-cropped.svg" alt="profile" />
+          <img src="img/symposium_cat_noah.svg" alt="profile" />
           <p id="idbox">{id}</p>
           <h5 id="pseudonym">{name}</h5>
           <div id="bio">{bio}</div>
@@ -70,7 +70,7 @@ function ProfileCard(props) {
       return (
         <div className="sidebar">
           <div id="content">
-            <img src="img/symposium_cat_noah-cropped.svg" alt="profile" />
+            <img src="img/symposium_cat_noah.svg" alt="profile" />
             <p id="idbox">{id}</p>
             <h5 id="pseudonym">{name}</h5>
             <div id="bio">{makeLoggedOutBio()}</div>
