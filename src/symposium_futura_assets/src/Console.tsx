@@ -50,7 +50,7 @@ function Console(props) {
       useEffect(scrollToBottom);
 
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     let oldCommand = command;
     let toDisplay = [oldCommand];
@@ -73,12 +73,16 @@ function Console(props) {
             toDisplay = toDisplay.concat(["sorry, not implemented"]);
             setHistory(history.concat(toDisplay));
         } else if (parsed[1] == "pseudonym") {
-            // let pseudonym = futura_actor.get_pseudonym();
-            // needs to be called in an async fn
+            let pseudonym = await futura_actor?.get_pseudonym();
             //setHistory(history.concat([pseudonym]));
-            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            toDisplay = toDisplay.concat([String(pseudonym)]);
             setHistory(history.concat(toDisplay));
-        } else {
+        } else if (parsed[1] == "principal") {
+            let whoami = await futura_actor?.whoami();
+            //setHistory(history.concat([pseudonym]));
+            toDisplay = toDisplay.concat([String(whoami)]);
+            setHistory(history.concat(toDisplay));
+        }else {
             toDisplay = toDisplay.concat(["error - type 'help' for options"]);
             setHistory(history.concat(toDisplay));
         }
