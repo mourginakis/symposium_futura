@@ -99,6 +99,11 @@ h6 {
     background-color: rgb(255, 255, 255, 1); // white
 }
 
+#pseudonym {
+    max-height: 36px;
+    overflow: hidden;
+}
+
 
 
 
@@ -131,6 +136,8 @@ h6 {
 .sidebar div#bio {
     height: 80px;
 }
+
+
 
 
 

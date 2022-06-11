@@ -16,7 +16,7 @@ type List =
      };
 service : {
   add_post: (text, text) -> (bool);
-  get_all_posts: () -> (vec PostList) query;
+  get_all_posts: () -> (PostList) query;
   get_bio: () -> (text) query;
   get_pseudonym: () -> (text) query;
   update_bio: (text) -> (bool);

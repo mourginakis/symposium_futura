@@ -7,6 +7,7 @@ import Trie "mo:base/Trie";
 import Iter "mo:base/Iter";
 import Option "mo:base/Option";
 import Debug "mo:base/Debug";
+import Array "mo:base/Array";
 
 import Cycles "mo:base/ExperimentalCycles";
 import Nat "mo:base/Nat";
@@ -23,6 +24,7 @@ actor {
     // type definitions
     type Pseudonym = Text;
     public type PostList = List.List<Post>;
+
 
     public type Post = {
         title: Text;
@@ -172,10 +174,12 @@ actor {
     
     // get_all_posts
     //   gets a list of all post objects
-    public query func get_all_posts() : async List.List<PostList> {
+    public query func get_all_posts() : async [Post] {
         //DB.vals(); //.toArray();
         // Iter.toList(simplemap.vals())
-        Iter.toList(DB.vals())
+        let iterofarrays = Iter.map(DB.vals(), func (x : PostList) : [Post] { List.toArray(x) });
+        Array.flatten(Iter.toArray(iterofarrays))
+        // List.flatten(Iter.toList(DB.vals()))
     };
 
     
@@ -205,5 +209,6 @@ actor {
     public shared (msg) func whoami() : async Principal {
         msg.caller
     };
+
 
 };

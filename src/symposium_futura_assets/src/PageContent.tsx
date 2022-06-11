@@ -39,8 +39,9 @@ function HomeContent() {
           console.log(result);
           setPosts(result);
       }
+
       init();
-    }, []);
+    }, [isAuthenticated]);
 
   // TODO: give the HR element a box-shadow with some css so it looks 3D
 
@@ -67,6 +68,14 @@ function HomeContent() {
         </>
       )}
       {/* {isAuthenticated ? <NewPost /> : <div />} */}
+      {posts?.map((post) => (
+        <SinglePost
+          // key={post.id}
+          title={post.title}
+          author={post.author}
+          content={post.content}
+        />
+      ))}
       {exampleposts.map((post) => (
         <SinglePost
           key={post.id}
