@@ -22,12 +22,25 @@ function PageContent(props) {
 
 
 
-
+// interface AllPosts {
+//     label: string;
+//   }
 
 function HomeContent() {
   const { isAuthenticated, futura_actor } = useContext(AuthContext);
 
   const [showNewPost, setShowNewPost] = useState(false);
+  const [posts, setPosts] = useState<any | undefined>([]);
+
+  useEffect(() =>
+  {
+      const init = async () => {
+          let result = await futura_actor?.get_all_posts();
+          console.log(result);
+          setPosts(result);
+      }
+      init();
+    }, []);
 
   // TODO: give the HR element a box-shadow with some css so it looks 3D
 
@@ -143,5 +156,7 @@ function NewPostForm(props) {
     );
   }
 }
+
+
 
 export default PageContent;

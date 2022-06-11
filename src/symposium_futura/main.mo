@@ -26,11 +26,18 @@ actor {
 
     public type Post = {
         title: Text;
-        author: Principal;
+        author: Text;
         // postdate: Time.Time; // Nanoseconds since 1970
         // lastedited: Time.Time;
         content: Text;
         // tags: List.List<Text>;
+        // bid: Nat64;
+        // tip: Nat64;
+    };
+
+    public type UserInfo = {
+        pseudonym: Text;
+        bio: Text;
     };
 
     
@@ -41,9 +48,7 @@ actor {
     //    should this be marked stable?
     //    we may never know! Only triemaps can be stable i guess
     private /*stable?*/ var DB = Map.HashMap<Principal, PostList>(10, Principal.equal, Principal.hash); 
-    private var pseudonyms = Map.HashMap<Principal, Text>(10, Principal.equal, Principal.hash);
-
-    private var simplemap = Map.HashMap<Text, Text>(10, Text.equal, Text.hash);
+    private var users = Map.HashMap<Principal, UserInfo>(10, Principal.equal, Principal.hash);
 
 
 
@@ -63,19 +68,75 @@ actor {
     //    returns the user's pseudonym, or, if null, returns the Principal ID.
     public shared query ({caller}) func get_pseudonym() : async Text {
         if (Principal.isAnonymous(caller)) {return "ANONYMOUS";};
-        switch (pseudonyms.get(caller)) {
-            case (null) "YOU";
-            case (?result) result;
-        }
+        switch (users.get(caller)) {
+            case (null) Principal.toText(caller);
+            case (?result) result.pseudonym;
+        };
     };
 
     
     // update_pseudonym
     //     checks to make sure user is logged in, updates the user's pen name
-    public shared ({caller}) func update_pseudonym(pseudonym: Text) : async () {
+    public shared ({caller}) func update_pseudonym(pseudonym: Text) : async Bool {
         assert not Principal.isAnonymous(caller);
-        pseudonyms.put(caller, pseudonym);
+
+        switch (users.get(caller)) {
+            case (null) {
+                let userInfo : UserInfo = {
+                    pseudonym = pseudonym;
+                    bio = "";
+                    };
+                users.put(caller, userInfo);
+                return true;
+            };
+            case (?result) {
+                let userInfo : UserInfo = {
+                    pseudonym = pseudonym;
+                    bio = result.bio;
+                };
+                users.put(caller, userInfo);
+                return true;
+            };
+        };
     };
+
+
+    // get_bio
+    //     returns a user's bio message
+    public shared query ({caller}) func get_bio() : async Text {
+        if (Principal.isAnonymous(caller)) {return "";};
+        switch (users.get(caller)) {
+            case (null) "";
+            case (?result) result.bio;
+        };
+    };
+
+
+    // update_bio
+    //     checks to make sure user is logged in, updates the user's bio
+    public shared ({caller}) func update_bio(bio: Text) : async Bool {
+        assert not Principal.isAnonymous(caller);
+
+        switch (users.get(caller)) {
+            case (null) {
+                let userInfo : UserInfo = {
+                    pseudonym = "UNDEFINED";
+                    bio = bio;
+                    };
+                users.put(caller, userInfo);
+                return true;
+            };
+            case (?result) {
+                let userInfo : UserInfo = {
+                    pseudonym = result.pseudonym;
+                    bio = bio;
+                };
+                users.put(caller, userInfo);
+                return true;
+            };
+        };
+    };
+
 
 
 
@@ -98,7 +159,7 @@ actor {
 
         let newPost : Post = {
             title = title;
-            author = caller;
+            author = Principal.toText(caller);
             content = content;
         };
 
@@ -115,7 +176,6 @@ actor {
         //DB.vals(); //.toArray();
         // Iter.toList(simplemap.vals())
         Iter.toList(DB.vals())
-        
     };
 
     

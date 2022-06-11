@@ -55,7 +55,7 @@ function Console(props) {
     let oldCommand = command;
     let toDisplay = [oldCommand];
     let parsed = parse_args(oldCommand);
-    // console.log(parse_args(oldCommand));
+    console.log(parse_args(oldCommand));
     // console.log(commandInput);
     setCommand("");
 
@@ -69,17 +69,16 @@ function Console(props) {
     } else if (parsed[0] == "show") {
         if (parsed[1] == "bio") {
             // not implemented
-            // futura_actor.get_pseudonym();
-            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            let bio = await futura_actor?.get_bio();
+            console.log(String(bio))
+            toDisplay = toDisplay.concat([String(bio)]);
             setHistory(history.concat(toDisplay));
         } else if (parsed[1] == "pseudonym") {
             let pseudonym = await futura_actor?.get_pseudonym();
-            //setHistory(history.concat([pseudonym]));
             toDisplay = toDisplay.concat([String(pseudonym)]);
             setHistory(history.concat(toDisplay));
         } else if (parsed[1] == "principal") {
             let whoami = await futura_actor?.whoami();
-            //setHistory(history.concat([pseudonym]));
             toDisplay = toDisplay.concat([String(whoami)]);
             setHistory(history.concat(toDisplay));
         }else {
@@ -88,16 +87,14 @@ function Console(props) {
         }
     } else if (parsed[0] == "change") {
         if (parsed[1] == "bio") {
-            // not implemented
-            // futura_actor.update_bio();
-            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            let success = await futura_actor?.update_bio(parsed[2]);
+            toDisplay = toDisplay.concat([String(success), "refresh webpage to see effect"]);
             setHistory(history.concat(toDisplay));
         } else if (parsed[1] == "pseudonym") {
             // remove quotes
             // const removed = parsed[3].replace(/"/g, '');
-            // futura_actor.update_pseudonym(removed);
-            // needs to be called in an async fn
-            toDisplay = toDisplay.concat(["sorry, not implemented"]);
+            let success = await futura_actor?.update_pseudonym(parsed[2]);
+            toDisplay = toDisplay.concat([String(success), "refresh webpage to see effect"]);
             setHistory(history.concat(toDisplay));
 
         } else {

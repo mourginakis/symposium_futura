@@ -8,7 +8,7 @@ import AuthContext from "./auth";
 
 function ProfileCard(props) {
     const {isAuthenticated, futura_actor} = useContext(AuthContext);
-    const [name, setName] = useState<string>("ANONYMOUS");
+    const [pseudonym, setPseudonym] = useState<string>("ANONYMOUS");
     const [id, setId] = useState<string | undefined>('2vxsx-fae');
     const [bio, setBio] = useState<string>();
     console.log("rerendering profilecard")
@@ -16,14 +16,24 @@ function ProfileCard(props) {
     useEffect(() => {
       const init = async () => {
         if (isAuthenticated) {
-          setName("-----")
+          setPseudonym("-----")
           const response = await futura_actor?.whoami();
           setId(response?.toString());
-          setName("YOU");
-          setBio("your bio");
+          // setPseudonym("YOU");
+          // setBio("your bio");
         }
       };
+      const init2 = async () => {
+          let response = await futura_actor?.get_pseudonym();
+          setPseudonym(String(response));
+      }
+      const init3 = async () => {
+        let response = await futura_actor?.get_bio();
+        setBio(String(response));
+    }
       init();
+      init2();
+      init3();
     }, [isAuthenticated]);
   
     useEffect(() =>
@@ -41,7 +51,7 @@ function ProfileCard(props) {
       "and find the truth",
     ];
   
-    const pseudonym = props.pseudonym || "ANONYMOUS";
+    // const pseudonym = props.pseudonym || "ANONYMOUS";
     // const bio = props.bio || (<p>wake me<br />{rand_nth(placeholders)}</p>);
     const money = props.money || "$₣: 200 ∞";
   
@@ -57,7 +67,7 @@ function ProfileCard(props) {
           <div id="content">
           <img src="img/symposium_cat_noah.svg" alt="profile" />
           <p id="idbox">{id}</p>
-          <h5 id="pseudonym">{name}</h5>
+          <h5 id="pseudonym">{pseudonym}</h5>
           <div id="bio">{bio}</div>
           <p id="money">{money}</p>
           <button id="authButton" onClick={props.deauthenticate}>DEAUTHENTICATE</button>
@@ -72,7 +82,7 @@ function ProfileCard(props) {
           <div id="content">
             <img src="img/symposium_cat_noah.svg" alt="profile" />
             <p id="idbox">{id}</p>
-            <h5 id="pseudonym">{name}</h5>
+            <h5 id="pseudonym">{pseudonym}</h5>
             <div id="bio">{makeLoggedOutBio()}</div>
             <p id="money">{money}</p>
             <button

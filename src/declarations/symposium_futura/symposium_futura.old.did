@@ -1,29 +1,26 @@
 type PostList = 
  opt record {
        Post;
-       List_1;
+       List;
      };
 type Post = 
  record {
-   author: principal;
+   author: text;
    content: text;
    title: text;
  };
-type List_1 = 
- opt record {
-       Post;
-       List_1;
-     };
 type List = 
  opt record {
-       PostList;
+       Post;
        List;
      };
 service : {
-  add_post: (text, text) -> ();
-  get_all_posts: () -> (List) query;
+  add_post: (text, text) -> (bool);
+  get_all_posts: () -> (vec PostList) query;
+  get_bio: () -> (text) query;
   get_pseudonym: () -> (text) query;
-  update_pseudonym: (text) -> ();
+  update_bio: (text) -> (bool);
+  update_pseudonym: (text) -> (bool);
   wallet_balance: () -> (nat);
   wallet_receive: () -> (record {accepted: nat64;});
   whoami: () -> (principal);
