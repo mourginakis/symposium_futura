@@ -31,7 +31,7 @@ function AboutContent() {
                 <li>more elegant, efficient and maintainable code</li>
                 <li>add post archival system, sort by tags, date, author</li>
                 <li>edit posts, create comments</li>
-                <li>more fleshed out user profiles</li>
+                <li>more fleshed out user profiles and UI</li>
                 <li>add sublime graphics and animations</li>
             </ul>
 
