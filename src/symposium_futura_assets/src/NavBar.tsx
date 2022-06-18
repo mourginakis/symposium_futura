@@ -3,11 +3,11 @@ function NavBar(props) {
       <nav id="nav">
         <a href="#" onClick={() => props.navSelection("home")}>
           <div className="logotitle">
-            {/* <img src="img/cypher/cool_cypher.svg" alt="cypher" /> */}
+            <img src="img/cypher/cypher_logo_static.jpg" alt="cypher" />
             {/* <img src="img/generic_quill.png" alt="quill"/> */}
-            <video autoPlay loop>
+            {/* <video autoPlay loop>
               <source src="img/cypher/cool_cypher_encoded.webm" type="video/webm"></source>
-            </video>
+            </video> */}
             <div>
               <h2>SYMPOSIUM FUTURA</h2>
               <p>community knowledge engine</p>

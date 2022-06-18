@@ -46,9 +46,9 @@ function ProfileCard(props) {
   
     const placeholders = [
       "when you're ready to change the world",
-      "and be my guiding light",
-      "from this dream",
-      "and find the truth",
+      // "and be my guiding light",
+      // "from this dream",
+      // "and find the truth",
     ];
   
     // const pseudonym = props.pseudonym || "ANONYMOUS";

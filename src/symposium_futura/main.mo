@@ -49,7 +49,7 @@ actor {
     //    posts can be accessed by author, by postdate, or by tags
     //    should this be marked stable?
     //    we may never know! Only triemaps can be stable i guess
-    private /*stable?*/ var DB = Map.HashMap<Principal, PostList>(10, Principal.equal, Principal.hash); 
+    private /*stable?*/ var DB = Map.HashMap<Principal, PostList>(11, Principal.equal, Principal.hash); 
     private var users = Map.HashMap<Principal, UserInfo>(10, Principal.equal, Principal.hash);
 
 
